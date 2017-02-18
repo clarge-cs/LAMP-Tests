@@ -1,0 +1,6 @@
+SELECT 
+	Id as 'Super Dump',
+	Name,
+	concat('Hi ',Name) as 'whatever' 
+FROM CS_Manufacturer__c 
+limit 10;

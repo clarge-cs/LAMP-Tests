@@ -1,0 +1,32 @@
+select 
+    sup.Id as 'SupplierNumber',
+    'TBD' as 'CorporateGroupID',
+    left(sup.Name, 50) as 'Name1',
+    left(sup.CS_DBA_Name__c, 50) as 'Name2',
+    left(concat(left(sup.KNDY4__Street__c, 50),
+                ' ',
+                left(sup.KNDY4__City__c, 50),
+                ', ',
+                left(sup.KNDY4__State__c, 50),
+                ' ',
+                left(sup.KNDY4__Zip_Code__c, 20)),
+        100) as 'Description',
+    left(sup.KNDY4__Street__c, 50) as 'Street',
+    left(sup.KNDY4__Zip_Code__c, 20) as 'PostalCode',
+    left(sup.KNDY4__City__c, 50) as 'City',
+    if(c.iso is null, 'US', c.iso) as 'CountryCoded',
+    left(KNDY4__Country__c, 50) as 'CountryName',
+    left(sup.KNDY4__Primary_Contact_Phone__c,
+        20) as 'TelephoneNumber',
+    pay.CS_Printable_Name__c as 'PaymentTerm',
+    'TBD' as 'Systemid'
+from
+    KNDY4__Supplier__c sup
+        left join
+    KNDY4__Payment_Term__c pay ON pay.Id = sup.KNDY4__Payment_Term__c
+        left join
+    country c ON lower(c.printable_name) = lower(sup.KNDY4__Country__c)
+        or lower(c.iso3) = lower(sup.KNDY4__Country__c)
+where
+    sup.CreatedDate >= NOW() - INTERVAL 3 DAY
+        or sup.LastModifiedDate >= NOW() - INTERVAL 3 DAY
