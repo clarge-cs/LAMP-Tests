@@ -1,0 +1,9 @@
+select
+	Total__c,
+	Commission_Margin__c/Total__c
+from CS_Order_Summary__c
+where
+	Total__c>0
+	and Commission_Margin__c>0
+order by CreatedDate desc
+limit 100000

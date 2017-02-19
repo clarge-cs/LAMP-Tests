@@ -17,7 +17,7 @@ $filename=CreateFileName("VEND","SYSID");
 $destination_ven= dirname(__FILE__)."/FilesToSend/".$filename;
 convertArrayToTSV(convertMySQLtoArray($result_ven),$destination_ven);
 
-UploadToStatementMatching($filename);
+//UploadToStatementMatching($filename);
 
 
 
